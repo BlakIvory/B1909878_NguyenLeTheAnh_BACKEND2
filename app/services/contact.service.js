@@ -32,7 +32,9 @@ class ContactService {
 
   
   async find(filter) {
-    const cursor = await this.contact.find(filter);
+    // console.log("filter")
+    const cursor = await this.Contact.find(filter);
+    // console.log(cursor)
     return await cursor.toArray();
   }
   async findByName(name) {
@@ -41,7 +43,7 @@ class ContactService {
     });
   }
   async findById(id) {
-    return await this.contact.findOne({
+    return await this.Contact.findOne({
       _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
     });
   }
@@ -59,11 +61,12 @@ class ContactService {
     return result;
   }
   async delete(id) {
-    const result = await this.Contact.findOneAndUpdate({
-      _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
+    const result = await this.Contact.findOneAndDelete({
+        _id: ObjectId.isValid(id) ? new ObjectId(id) : null,
     });
-    return result.value;
-  }
+  
+    return result;
+}
 
   async findFavorite() {
     return await this.find({ favorite: true });

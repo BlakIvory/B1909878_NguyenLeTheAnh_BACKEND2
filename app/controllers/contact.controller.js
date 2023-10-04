@@ -20,10 +20,11 @@ exports.create = async (req, res, next) => {
 }
 
 exports.findAll = async (req, res, next) => {
+  // console.log(req.body)
   let documents = [];
-
   try {
     const contactService = new ContactService(MongoDB.client);
+    // console.log(req.query)
     const { name } = req.query;
     if (name) {
       documents = await contactService.findByName(name);
@@ -35,14 +36,18 @@ exports.findAll = async (req, res, next) => {
       new ApiError(500, 'An error occurred while retrieving contacts')
     )
   }
-
+  // console.log("req.params")
   return res.send(documents);
 }
 
 exports.findOne = async (req, res, next) => {
   try {
+    
     const contactService = new ContactService(MongoDB.client);
+    
     const document = await contactService.findById(req.params.id);
+
+    console.log(document)
     if (!document) {
       return next(new ApiError(404, 'Contact not found'));
     }
@@ -79,7 +84,9 @@ exports.update = async (req, res, next) => {
 exports.delete = async (req, res, next) => {
   try {
     const contactService = new ContactService(MongoDB.client);
+    // console.log(req.params.id);
     const document = await contactService.delete(req.params.id);
+
     if (!document) {
       return next(new ApiError(404, 'Contact not found'));
     }
