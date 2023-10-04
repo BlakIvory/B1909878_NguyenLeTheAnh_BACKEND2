@@ -16,11 +16,10 @@ class ContactService {
     Object.keys(contact).forEach(
       (key) => contact[key] === undefined && delete contact[key]
     );  
-    console.log(contact)
-
+    return contact
   }
   async create(payload) {
-    console.log(payload)
+    // console.log(payload)
     const contact = await this.extractContactData(payload);
     const result = await this.Contact.findOneAndUpdate(
       contact,
@@ -29,6 +28,9 @@ class ContactService {
     );
     return result;
   }
+
+
+  
   async find(filter) {
     const cursor = await this.contact.find(filter);
     return await cursor.toArray();
