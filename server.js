@@ -7,6 +7,7 @@ const MongoDB = require("./app/utils/mongodb.util")
 async function startServer() {
   try {
    await MongoDB.connect(config.db.uri);
+   
    console.log("Connected to the MongoDB");
 
     const PORT = config.app.port;
